@@ -28,7 +28,7 @@ const SqlConnector = async (req, res) => {
             const tables = await sequelize.getQueryInterface().showAllTables();
             res.send({ success: true, tables })
         } catch (error) {
-            // console.error('Unable to connect to the database:', error.original.code);
+            console.error('Unable to connect to the database:', error.original.code);
             if (error.original.code == "ELOGIN") res.send({ success: false, message: "Invalid Credentials" }, error.original.code)
         }
     } catch (error) {
@@ -78,7 +78,7 @@ const CSVConvertor = async (req, res) => {
 
         res.status(200).send(response);
     } catch (error) {
-        // console.error('Error processing file:', error);
+        console.error('Error processing file:', error);
         res.status(500).send({ error: error });
     }
 }

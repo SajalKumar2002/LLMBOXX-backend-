@@ -37,5 +37,5 @@ app.use("/api/data", DataSourceRouter)
 
 app.listen(PORT, async () => {
     createConnection();
-    // console.log("Server is running on " + PORT);
+    console.log("Server is running on " + PORT);
 });
