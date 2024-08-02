@@ -3,6 +3,8 @@ const express = require("express");
 const cors = require('cors');
 const bodyparser = require('body-parser')
 const cookieParser = require('cookie-parser');
+const path = require('path');
+const _dirname = path.dirname("");
 
 const { createConnection } = require('./config/SQLconnection.js');
 
@@ -17,6 +19,9 @@ const corsOptions = {
     credentials: true
 };
 
+const buildpath = path.join(_dirname, "../frontend/build")
+app.use(express.static(buildpath))
+
 app.use(cors(corsOptions));
 app.use(bodyparser.urlencoded({ extended: true }));
 app.use(express.json());
@@ -29,10 +34,6 @@ app.use("/api/user", UserRouter);
 app.use("/api/job", JobRouter)
 app.use("/api/llm", ModelRouter);
 app.use("/api/data", DataSourceRouter)
-
-app.get("/", (req, res) => {
-    res.send("Api is Running");
-});
 
 app.listen(PORT, async () => {
     createConnection();
