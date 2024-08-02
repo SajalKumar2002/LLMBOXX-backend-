@@ -4,7 +4,7 @@ const sequelize = new Sequelize('LLMModel', 'sa', 'sajal123', {
     host: 'SAJAL\\SQLEXPRESS',
     dialect: 'mssql',
     logging: false,
-    port: 3306,
+    // port: 3306,
     dialectOptions: {
         options: {
             encrypt: true,
