@@ -22,8 +22,8 @@ const registerUser = async (req, res) => {
             res.status(409).send({ success: false, message: "User Already exists" })
         }
     } catch (error) {
-        console.error(error)
-        res.send({ success: false, message: "Service Error" })
+        // console.error(error)
+        res.send({ success: false, message: "Service Error", error })
     }
 }
 
@@ -35,15 +35,21 @@ const loginUser = async (req, res) => {
         } else {
             bcrypt.compare(req.body.password, existingUser.password, function (err, result) {
                 if (result) {
-                    sendTokenToClient(existingUser.email, res)
+                    sendTokenToClient(
+                        {
+                            id: existingUser.id,
+                            email: existingUser.email
+                        },
+                        res
+                    )
                 }
                 else
                     res.send({ success: false, message: "Incorrect Credentials" })
             });
         }
     } catch (error) {
-        console.error(error)
-        res.send({ success: false, message: "Service Error" })
+        // console.error(error)
+        res.send({ success: false, message: "Service Error", error })
     }
 }
 
@@ -52,8 +58,8 @@ const logoutUser = async (req, res) => {
         res.clearCookie('usertoken', { httpOnly: true, secure: true, sameSite: 'Strict' });
         res.status(200).send({ success: true, message: 'Successfully Logged Out' });
     } catch (error) {
-        console.error(error)
-        res.send({ success: false, message: "Service Error" })
+        // console.error(error)
+        res.send({ success: false, message: "Service Error", error })
     }
 }
 
@@ -78,8 +84,8 @@ const deleteUser = async (req, res) => {
             res.send({ success: true, message: "User Not Found" })
         }
     } catch (error) {
-        console.error(error)
-        res.send({ success: false, message: "Service Error" })
+        // console.error(error)
+        res.send({ success: false, message: "Service Error", error })
     }
 }
 

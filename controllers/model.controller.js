@@ -5,8 +5,8 @@ const displayModel = async (req, res) => {
         const models = await LLMModel.findAll();
         res.send(models);
     } catch (error) {
-        console.error(error);
-        res.send({ success: false, message: "Service error" })
+        // console.error(error);
+        res.send({ success: false, message: "Service Error", error })
     }
 }
 
@@ -21,7 +21,7 @@ const addModel = async (req, res) => {
         }
     } catch (error) {
         console.error(error);
-        res.send({ success: false, message: "Service error" })
+        res.send({ success: false, message: "Service Error", error })
     }
 }
 

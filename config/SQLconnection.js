@@ -1,4 +1,4 @@
-const { Sequelize, DataTypes } = require('sequelize');
+const { Sequelize } = require('sequelize');
 
 const sequelize = new Sequelize('LLMModel', 'sa', 'sajal123', {
     host: 'SAJAL\\SQLEXPRESS',

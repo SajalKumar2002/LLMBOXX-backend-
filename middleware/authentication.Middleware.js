@@ -6,6 +6,7 @@ exports.getAccessToRoute = (req, res, next) => {
         if (usertoken) {
             const result = jwt.verify(usertoken, process.env.JWT_TOKEN)
             if (result) {
+                req.user = result;
                 if (next) next()
             } else {
                 res.clearCookie('usertoken', { httpOnly: true, secure: true, sameSite: 'Strict' });

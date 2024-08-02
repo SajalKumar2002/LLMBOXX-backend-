@@ -35,10 +35,6 @@ app.get("/", (req, res) => {
 });
 
 app.listen(PORT, async () => {
-    try {
-        createConnection();
-    } catch (error) {
-        console.log(error.original);
-    }
-    console.log("Server is running on " + PORT);
+    createConnection();
+    // console.log("Server is running on " + PORT);
 });

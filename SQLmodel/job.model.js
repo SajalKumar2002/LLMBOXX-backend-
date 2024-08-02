@@ -12,15 +12,11 @@ const Job = sequelize.define("Job", {
     expected_time: {
         type: DataTypes.DATE,
         allowNull: false,
-        defaultValue: () => {
-            new Date(Date.now() + 10 * 60 * 1000);
-        }
+        defaultValue: () => new Date(Date.now() + 10 * 60 * 1000)
     },
     status: {
-        type: DataTypes.STRING,
-        validate: {
-            isIn: [['completed', 'waiting']]
-        }
+        type: DataTypes.TEXT,
+        defaultValue: () => "waiting",
     },
     userid: {
         type: DataTypes.UUID,

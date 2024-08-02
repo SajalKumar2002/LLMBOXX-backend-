@@ -1,6 +1,7 @@
 const csv = require('csvtojson');
 const { sequelize } = require("../config/SQLconnection");
 const { DataTypes } = require('sequelize');
+const { Sequelize } = require('sequelize');
 
 const {
     nameExtractor,
@@ -10,19 +11,29 @@ const {
 const SqlConnector = async (req, res) => {
     try {
         const { serveraddress, port, username, password, database } = req.body;
-        await sql.connect(
-            `Server=${serveraddress},
-            ${port};
-            Database=${database};
-            User Id=${username};
-            Password=${password};
-            Encrypt=true`
-        )
-        // const result = await sql.query`select * from mytable where id = ${value}`
-        // console.dir(result)
+        const sequelize = new Sequelize(database, username, password, {
+            host: serveraddress,
+            dialect: 'mssql',
+            logging: false,
+            dialectOptions: {
+                options: {
+                    encrypt: true,
+                    trustServerCertificate: true,
+                }
+            }
+        });
+        try {
+            await sequelize.authenticate();
+            console.log('Connection has been established successfully.');
+            const tables = await sequelize.getQueryInterface().showAllTables();
+            res.send({ success: true, tables })
+        } catch (error) {
+            // console.error('Unable to connect to the database:', error.original.code);
+            if (error.original.code == "ELOGIN") res.send({ success: false, message: "Invalid Credentials" }, error.original.code)
+        }
     } catch (error) {
         console.log(error);
-        res.send({ message: "Request failed" })
+        res.send({ success: false, message: "Request failed" })
     }
 }
 
@@ -67,23 +78,16 @@ const CSVConvertor = async (req, res) => {
 
         res.status(200).send(response);
     } catch (error) {
-        console.error('Error processing file:', error);
-        res.status(500).send('Error processing file');
-    }
-}
-
-const connectDB = async (req, res) => {
-    try {
-
-        res.send("data")
-    } catch (error) {
-        console.log(error);
-        res.send({ message: "Request failed" })
+        // console.error('Error processing file:', error);
+        res.status(500).send({ error: error });
     }
 }
 
 module.exports = {
     SqlConnector,
-    CSVConvertor,
-    connectDB
+    CSVConvertor
 }
+
+// s3 bucket - to store csv/pdf files
+// ec2 - build server 
+// 
