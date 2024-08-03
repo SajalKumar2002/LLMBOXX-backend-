@@ -14,15 +14,18 @@ const ModelRouter = require('./routes/model.route.js');
 const DataSourceRouter = require('./routes/datasourse.route.js')
 
 const app = express();
+
+// const buildpath = path.join(_dirname, "../frontend/build")
+// app.use(express.static(buildpath))
+
 const corsOptions = {
     origin: "http://localhost:3000",
-    credentials: true
+    credentials: true,
+    optionSuccessStatus: 200,
 };
 
-const buildpath = path.join(_dirname, "../frontend/build")
-app.use(express.static(buildpath))
-
 app.use(cors(corsOptions));
+
 app.use(bodyparser.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

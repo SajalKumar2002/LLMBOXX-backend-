@@ -5,14 +5,26 @@ const User = require('./user.model');
 
 const Job = sequelize.define("Job", {
     id: {
-        type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV1,
-        primaryKey: true
+        type: DataTypes.STRING,
+        primaryKey: true,
+        unique: true
     },
-    expected_time: {
-        type: DataTypes.DATE,
+    createdAt: {
+        type: DataTypes.STRING,
         allowNull: false,
-        defaultValue: () => new Date(Date.now() + 10 * 60 * 1000)
+        defaultValue: () => {
+            const date = new Date();
+            return date.toLocaleDateString('en-GB') + "-" + date.toLocaleTimeString("en-US");
+        }
+    },
+    expectedTime: {
+        type: DataTypes.STRING,
+        allowNull: true,
+        defaultValue: () => {
+            const date = new Date();
+            date.setMinutes(date.getMinutes() + 10);
+            return date.toLocaleDateString("en-GB") + "-" + date.toLocaleTimeString("en-US");
+        }
     },
     status: {
         type: DataTypes.TEXT,
@@ -25,8 +37,6 @@ const Job = sequelize.define("Job", {
             key: "id"
         }
     }
-}, {
-    timestamps: true
 });
 
 Job.sync({ alter: true })

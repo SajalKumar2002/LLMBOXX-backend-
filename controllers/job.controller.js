@@ -10,13 +10,28 @@ const displayJobDetails = async (req, res) => {
     }
 }
 
+const generateID = (limit) => {
+    const characters = 'abcdefghijklmopqrstuvwxyz123456789';
+    let charResult = '';
+    for (let i = 0; i < limit; i++) {
+        charResult += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+    return  charResult;
+}
+
 const generateJob = async (req, res) => {
     try {
+        let code, codeAlreadyExists;
+        do {
+            code = generateID(9);
+            codeAlreadyExists = await Job.findOne({ where: { id: code } });
+        } while (codeAlreadyExists);
+
         const newJob = await Job.create({
             userid: req.user.id,
-
+            id: code
         })
-        res.send({ success: true, job: { ...newJob } })
+        res.send({ success: true, job: newJob })
     } catch (error) {
         console.error(error);
         res.send({ success: false, message: "Service Error", error })
