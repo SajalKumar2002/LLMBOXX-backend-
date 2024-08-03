@@ -15,16 +15,16 @@ const DataSourceRouter = require('./routes/datasourse.route.js')
 
 const app = express();
 
-// const buildpath = path.join(_dirname, "../frontend/build")
-// app.use(express.static(buildpath))
+const buildpath = path.join(_dirname, "../frontend/build")
+app.use(express.static(buildpath))
 
-const corsOptions = {
-    origin: "http://localhost:3000",
-    credentials: true,
-    optionSuccessStatus: 200,
-};
+// const corsOptions = {
+//     origin: "http://localhost:3000",
+//     credentials: true,
+//     optionSuccessStatus: 200,
+// };
 
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
 
 app.use(bodyparser.urlencoded({ extended: true }));
 app.use(express.json());
