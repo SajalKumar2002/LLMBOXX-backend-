@@ -4,7 +4,6 @@ const cors = require('cors');
 const bodyparser = require('body-parser')
 const cookieParser = require('cookie-parser');
 const path = require('path');
-const _dirname = path.dirname("");
 
 const { createConnection } = require('./config/SQLconnection.js');
 
@@ -15,7 +14,7 @@ const DataSourceRouter = require('./routes/datasourse.route.js')
 
 const app = express();
 
-const buildpath = path.join(_dirname, "../frontend/build")
+const buildpath = path.join(__dirname, "../frontend/build")
 app.use(express.static(buildpath))
 
 // const corsOptions = {
@@ -37,6 +36,10 @@ app.use("/api/user", UserRouter);
 app.use("/api/job", JobRouter)
 app.use("/api/llm", ModelRouter);
 app.use("/api/data", DataSourceRouter)
+
+app.get('*', (req, res) => {
+    res.sendFile(path.join(buildpath, 'index.html'));
+});
 
 app.listen(PORT, async () => {
     createConnection();

@@ -14,7 +14,7 @@ const Job = sequelize.define("Job", {
         allowNull: false,
         defaultValue: () => {
             const date = new Date();
-            return date.toLocaleDateString('en-GB') + "-" + date.toLocaleTimeString("en-US");
+            return date.toLocaleDateString('en-GB') + " - " + date.toLocaleTimeString("en-US");
         }
     },
     expectedTime: {
@@ -23,7 +23,7 @@ const Job = sequelize.define("Job", {
         defaultValue: () => {
             const date = new Date();
             date.setMinutes(date.getMinutes() + 10);
-            return date.toLocaleDateString("en-GB") + "-" + date.toLocaleTimeString("en-US");
+            return date.toLocaleDateString("en-GB") + " - " + date.toLocaleTimeString("en-US");
         }
     },
     status: {
