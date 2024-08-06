@@ -3,7 +3,6 @@ const express = require("express");
 const cors = require('cors');
 const bodyparser = require('body-parser')
 const cookieParser = require('cookie-parser');
-const path = require('path');
 
 const { createConnection } = require('./config/SQLconnection.js');
 
@@ -14,6 +13,7 @@ const DataSourceRouter = require('./routes/datasourse.route.js')
 
 const app = express();
 
+// const path = require('path');
 // const buildpath = path.join(__dirname, "../frontend/build")
 // app.use(express.static(buildpath))
 

@@ -10,7 +10,7 @@ exports.sendTokenToClient = (client, res) => {
         }
     )
     res
-        .status(201)
+        .status(200)
         .send({ success: true, message: "Successfully Logged In" })
 }
 

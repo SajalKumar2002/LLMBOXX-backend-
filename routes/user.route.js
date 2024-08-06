@@ -16,7 +16,6 @@ const {
 
 const UserRouter = Router();
 
-
 UserRouter
     // .get("/", display)
     // .post("/register", registerUser)

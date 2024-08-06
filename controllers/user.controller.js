@@ -71,7 +71,7 @@ const display = async (req, res) => {
 }
 
 const sendIsUser = (req, res) => {
-    res.status(201);
+    res.status(200).send({ success: true });
 }
 
 const deleteUser = async (req, res) => {
