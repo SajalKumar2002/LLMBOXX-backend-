@@ -1,13 +1,13 @@
 const { Router } = require("express");
 
 const {
-    display,
+    // display,
+    // registerUser,
+    // deleteUser,
 
-    registerUser,
     loginUser,
     logoutUser,
     sendIsUser,
-    deleteUser
 } = require("../controllers/user.controller");
 
 const {
@@ -16,12 +16,12 @@ const {
 
 const UserRouter = Router();
 
-UserRouter.get("/", display);
 
 UserRouter
-    .post("/register", registerUser)
+    // .get("/", display)
+    // .post("/register", registerUser)
     .post("/login", loginUser)
-    .delete("/", deleteUser)
+    // .delete("/", deleteUser)
     .get("/logout", getAccessToRoute, logoutUser)
     .get("/check", getAccessToRoute, sendIsUser)
 
