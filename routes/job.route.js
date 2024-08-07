@@ -11,7 +11,7 @@ const {
 const JobsRouter = Router();
 
 JobsRouter
-    .get("/",  displayJobDetails)
-    .get("/generate", generateJob)
+    .get("/", getAccessToRoute, displayJobDetails)
+    .get("/generate", getAccessToRoute, generateJob)
 
 module.exports = JobsRouter;
