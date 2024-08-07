@@ -2,7 +2,8 @@ const Job = require("../SQLmodel/job.model");
 
 const displayJobDetails = async (req, res) => {
     try {
-        const job_details = await Job.findAll({ where: { userid: req.user.id } });
+        // const job_details = await Job.findAll({ where: { userid: req.user.id } });
+        const job_details = await Job.findAll();
         res.status(201).send({ success: true, job_details })
     } catch (error) {
         console.error(error);

@@ -39,9 +39,4 @@ const Job = sequelize.define("Job", {
     }
 });
 
-Job.sync({ alter: true })
-    .catch(error => {
-        console.error('Error syncing:', error.original);
-    });
-
 module.exports = Job

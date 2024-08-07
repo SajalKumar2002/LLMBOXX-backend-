@@ -1,4 +1,5 @@
-const { createConnection } = require('./config/SQLconnection.js');
+const { createConnection, sequelize } = require('./config/SQLconnection.js');
+const bcrypt = require('bcrypt');
 
 const JOB = require('./SQLmodel/job.model.js')
 const USER = require('./SQLmodel/user.model.js')
@@ -6,27 +7,38 @@ const MODEL = require('./SQLmodel/model.model.js')
 
 const importData = async () => {
     try {
-        await JOB.destroy();
-        await USER.destroy();
-        await MODEL.destroy();
+        createConnection()
 
-        const createdUsers = await USER.create({
-            email: "admin@gmail.com",
-            password: "password"
-        });
-        const adminUser = createdUsers.id;
+        await JOB.drop();
+        await MODEL.drop();
+        await USER.drop();
+        console.log('All tables dropped!');
+
+        await sequelize.sync({ force: true });
+        console.log('All models were synchronized successfully.');
+
+        const hash = await bcrypt.hash("password", 10)
+        const createdUsers = await USER.create(
+            {
+                email: "admin@gmail.com",
+                password: hash
+            }
+        );
 
         const models = [
             {
-                model_name: 
-                base_model:
+                model_name: "Arion_gemini",
+                base_model: "gemini"
+            },
+            {
+                model_name: "Arion_llama2",
+                base_model: "llama2"
             }
         ]
 
         const sampleModel = models.map((model) => {
-            return { ...model, user: adminUser };
+            return { ...model, userid: createdUsers.id };
         });
-        // console.log(sampleProducts);
         await MODEL.bulkCreate(sampleModel);
 
         console.log("Data Imported");
@@ -39,11 +51,13 @@ const importData = async () => {
 
 const destroyData = async () => {
     try {
-        await JOB.destroy();
-        await USER.destroy();
-        await MODEL.destroy();
+        createConnection()
 
-        console.log("Data Destroyed!");
+        await JOB.drop();
+        await USER.drop();
+        await MODEL.drop();
+        console.log('All tables dropped!');
+
         process.exit();
     } catch (error) {
         console.log(error.message);

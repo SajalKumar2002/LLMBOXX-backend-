@@ -13,17 +13,16 @@ const DataSourceRouter = require('./routes/datasourse.route.js')
 
 const app = express();
 
-const path = require('path');
-const buildpath = path.join(__dirname, "../frontend/build")
-app.use(express.static(buildpath))
+// const path = require('path');
+// const buildpath = path.join(__dirname, "../frontend/build")
+// app.use(express.static(buildpath))
 
-// const corsOptions = {
-//     origin: "http://localhost:3000",
-//     credentials: true,
-//     optionSuccessStatus: 200,
-// };
+const corsOptions = {
+    origin: "http://localhost:3000",
+    credentials: true
+};
 
-// app.use(cors(corsOptions));
+app.use(cors(corsOptions));
 
 app.use(bodyparser.urlencoded({ extended: true }));
 app.use(express.json());
@@ -37,9 +36,9 @@ app.use("/api/job", JobRouter)
 app.use("/api/llm", ModelRouter);
 app.use("/api/data", DataSourceRouter)
 
-app.get('*', (req, res) => {
-    res.sendFile(path.join(buildpath, 'index.html'));
-});
+// app.get('*', (req, res) => {
+//     res.sendFile(path.join(buildpath, 'index.html'));
+// });
 
 app.listen(PORT, async () => {
     createConnection();

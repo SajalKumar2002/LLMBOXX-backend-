@@ -21,9 +21,4 @@ const User = sequelize.define('User', {
     timestamps: true
 });
 
-User.sync({ alter: true })
-    .catch(error => {
-        console.error('Error syncing:', error.original);
-    });
-
 module.exports = User;

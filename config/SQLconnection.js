@@ -1,16 +1,10 @@
 const { Sequelize } = require('sequelize');
 
-const sequelize = new Sequelize('LLMModel', 'sa', 'sajal123', {
-    host: 'SAJAL\\SQLEXPRESS',
-    dialect: 'mssql',
+const sequelize = new Sequelize('llmmodel', 'root', '#Sajal123$', {
+    host: 'localhost',
+    dialect: 'mysql',
     logging: false,
     port: 3306,
-    dialectOptions: {
-        options: {
-            encrypt: true,
-            trustServerCertificate: true,
-        }
-    }
 });
 
 const createConnection = async () => {

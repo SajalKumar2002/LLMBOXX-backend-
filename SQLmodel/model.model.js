@@ -36,9 +36,4 @@ const Model = sequelize.define("Model", {
     }
 })
 
-Model.sync({ alter: true })
-    .catch(error => {
-        console.error('Error syncing:', error.original);
-    });
-
 module.exports = Model;
